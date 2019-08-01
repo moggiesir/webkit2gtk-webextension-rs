@@ -2,10 +2,14 @@
 // from gir-files (https://github.com/gtk-rs/gir-files)
 // DO NOT EDIT
 
+#[cfg(any(feature = "v2_22", feature = "dox"))]
+use ScriptWorld;
 #[cfg(any(feature = "v2_2", feature = "dox"))]
 use glib::GString;
 use glib::object::IsA;
 use glib::translate::*;
+#[cfg(any(feature = "v2_22", feature = "dox"))]
+use java_script_core;
 use std::fmt;
 use webkit2_webextension_sys;
 
@@ -28,11 +32,11 @@ pub trait FrameExt: 'static {
     //#[cfg(any(feature = "v2_2", feature = "dox"))]
     //fn get_javascript_global_context(&self) -> /*Ignored*/Option<java_script_core::GlobalContextRef>;
 
-    //#[cfg(any(feature = "v2_22", feature = "dox"))]
-    //fn get_js_context(&self) -> /*Ignored*/Option<java_script_core::Context>;
+    #[cfg(any(feature = "v2_22", feature = "dox"))]
+    fn get_js_context(&self) -> Option<java_script_core::Context>;
 
-    //#[cfg(any(feature = "v2_22", feature = "dox"))]
-    //fn get_js_context_for_script_world<P: IsA<ScriptWorld>>(&self, world: &P) -> /*Ignored*/Option<java_script_core::Context>;
+    #[cfg(any(feature = "v2_22", feature = "dox"))]
+    fn get_js_context_for_script_world<P: IsA<ScriptWorld>>(&self, world: &P) -> Option<java_script_core::Context>;
 
     //#[cfg(any(feature = "v2_22", feature = "dox"))]
     //fn get_js_value_for_dom_object<P: IsA<DOMObject>>(&self, dom_object: &P) -> /*Ignored*/Option<java_script_core::Value>;
@@ -60,15 +64,19 @@ impl<O: IsA<Frame>> FrameExt for O {
     //    unsafe { TODO: call webkit2_webextension_sys:webkit_frame_get_javascript_global_context() }
     //}
 
-    //#[cfg(any(feature = "v2_22", feature = "dox"))]
-    //fn get_js_context(&self) -> /*Ignored*/Option<java_script_core::Context> {
-    //    unsafe { TODO: call webkit2_webextension_sys:webkit_frame_get_js_context() }
-    //}
+    #[cfg(any(feature = "v2_22", feature = "dox"))]
+    fn get_js_context(&self) -> Option<java_script_core::Context> {
+        unsafe {
+            from_glib_full(webkit2_webextension_sys::webkit_frame_get_js_context(self.as_ref().to_glib_none().0))
+        }
+    }
 
-    //#[cfg(any(feature = "v2_22", feature = "dox"))]
-    //fn get_js_context_for_script_world<P: IsA<ScriptWorld>>(&self, world: &P) -> /*Ignored*/Option<java_script_core::Context> {
-    //    unsafe { TODO: call webkit2_webextension_sys:webkit_frame_get_js_context_for_script_world() }
-    //}
+    #[cfg(any(feature = "v2_22", feature = "dox"))]
+    fn get_js_context_for_script_world<P: IsA<ScriptWorld>>(&self, world: &P) -> Option<java_script_core::Context> {
+        unsafe {
+            from_glib_full(webkit2_webextension_sys::webkit_frame_get_js_context_for_script_world(self.as_ref().to_glib_none().0, world.as_ref().to_glib_none().0))
+        }
+    }
 
     //#[cfg(any(feature = "v2_22", feature = "dox"))]
     //fn get_js_value_for_dom_object<P: IsA<DOMObject>>(&self, dom_object: &P) -> /*Ignored*/Option<java_script_core::Value> {

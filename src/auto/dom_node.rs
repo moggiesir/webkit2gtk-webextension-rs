@@ -32,7 +32,7 @@ glib_wrapper! {
 
 impl DOMNode {
     //#[cfg(any(feature = "v2_22", feature = "dox"))]
-    //pub fn for_js_value(value: /*Ignored*/&mut java_script_core::Value) -> Option<DOMNode> {
+    //pub fn for_js_value(value: /*Ignored*/&java_script_core::Value) -> Option<DOMNode> {
     //    unsafe { TODO: call webkit2_webextension_sys:webkit_dom_node_for_js_value() }
     //}
 }

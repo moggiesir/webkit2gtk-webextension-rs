@@ -17,7 +17,7 @@ regen_check: $(GIR) $(GIR_FILES)
 src/auto/mod.rs : Gir.toml $(GIR) $(GIR_FILES)
 	$(GIR) -c Gir.toml
 
-webkit2gtk-sys/src/lib.rs : webkit2gtk-webextension-sys/Gir.toml $(GIR) $(GIR_FILES)
+webkit2gtk-webextension-sys/src/lib.rs : webkit2gtk-webextension-sys/Gir.toml $(GIR) $(GIR_FILES)
 	$(GIR) -c webkit2gtk-webextension-sys/Gir.toml
 
 $(GIR) : $(GIR_SRC)
